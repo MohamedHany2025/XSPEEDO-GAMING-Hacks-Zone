@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">XSPEEDO GAMING - الألعاب</title>
+  <link rel="icon" type="image/png" href="img/Game.png">
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    body {
+      font-family: 'Courier New', monospace;
+      background: black;
+      color: #00ff99;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: black;
+    }
+
+    header {
+      padding: 20px;
+      position: relative;
+      border-bottom: 2px solid #00ff99;
+    }
+    header img {
+      width: 150px;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #00ff99;
+    }
+    header h1 {
+      font-size: 2rem;
+      text-shadow: 0 0 15px #00ff99;
+    }
+
+    nav {
+      margin-top: 20px;
+    }
+    nav a {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      border: 2px solid #00ff99;
+      border-radius: 8px;
+      color: #00ff99;
+      text-decoration: none;
+      transition: 0.3s;
+      font-weight: bold;
+    }
+    nav a:hover {
+      background: #00ff99;
+      color: black;
+      box-shadow: 0 0 15px #00ff99;
+    }
+
+    #lang-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 16px;
+      border: 2px solid #00ff99;
+      border-radius: 8px;
+      background: transparent;
+      color: #00ff99;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    #lang-btn:hover {
+      background: #00ff99;
+      color: black;
+    }
+
+    .content {
+      margin: 40px auto;
+      max-width: 900px;
+      padding: 20px;
+    }
+
+    .game {
+      background: rgba(0, 255, 153, 0.05);
+      border: 1px solid #00ff99;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      padding: 20px;
+      text-align: left;
+      transition: 0.3s;
+    }
+    .game:hover {
+      background: rgba(0, 255, 153, 0.15);
+      box-shadow: 0 0 20px #00ff99;
+    }
+    .game h2 {
+      color: #00ff99;
+      margin-bottom: 10px;
+    }
+    .game p {
+      color: #ccc;
+      line-height: 1.6;
+    }
+    .game a {
+      display: inline-block;
+      margin-top: 10px;
+      color: black;
+      background: #00ff99;
+      padding: 8px 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .game a:hover {
+      background: #00cc77;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 15px;
+      border-top: 1px solid #00ff99;
+      color: #444;
+      font-size: 0.9rem;
+    }
+    #nav-games-active{
+      background: #00ff99;
+      color: black;
+      box-shadow: 0 0 15px #00ff99;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+
+  <header>
+    <button id="lang-btn">ENG</button>
+    <img src="img/XSPEEDO GAMING TINY.png" alt="XSPEEDO GAMING">
+    <h1 id="pag-title">🎮 قسم الألعاب</h1>
+    <nav>
+      <a id="nav-home" href="index.html" >🏠 الرئيسية</a>
+      <a id="nav-games-active" href="games.html">🎮 الألعاب</a>
+      <a id="nav-tools" href="tools.html">🛠️ الأدوات</a>
+      <a id="nav-tuts" href="tutorials.html">📚 الشروحات</a>
+    </nav>
+  </header>
+
+  <div class="content">
+    <div class="game">
+      <h2 id="game1-title">🔥 لعبة ببجي مهكرة</h2>
+      <p id="game1-desc">نسخة معدلة من لعبة PUBG توفر مميزات إضافية مثل أزياء مجانية وسرعة محسنة.</p>
+      <a id="game1-btn" href="downloads/DRAX V3.APK" target="_blank" download="XSPEEDO GAMING HACKER">تحميل اللعبة</a>
+    </div>
+
+    <div class="game">
+      <h2 id="game2-title">⚡ فورتنايت بخصائص خاصة</h2>
+      <p id="game2-desc">إصدار مخصص من Fortnite يوفر لك سكنات مجانية وإضافات قوية.</p>
+      <a id="game2-btn" href="#" target="_blank" aria-disabled="true">تحميل اللعبة</a>
+    </div>
+
+    <div class="game">
+      <h2 id="game3-title">🚗 سباق السيارات المعدلة</h2>
+      <p id="game3-desc">لعبة سباق سيارات مع تعديلات خاصة لزيادة المتعة والتشويق.</p>
+      <a id="game3-btn" href="#" target="_blank" aria-disabled="true">تحميل اللعبة</a>
+    </div>
+  </div>
+
+  <footer id="footer">
+    Ⓒ 2025 XSPEEDO GAMING - جميع الحقوق محفوظة
+  </footer>
+
+  <script>
+    // خلفية الماتريكس
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = "01XSPEEDO GAMES".split("");
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array.from({ length: columns }).fill(1);
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#0f0";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    setInterval(draw, 33);
+
+    // ================================
+    // تبديل اللغة
+    // ================================
+    let currentLang = "ar";
+    const langBtn = document.getElementById("lang-btn");
+
+    const translations = {
+      ar: {
+        pageTitle: "XSPEEDO GAMING - الألعاب",
+        pagTitle: "🎮 قسم الألعاب",
+        navHome: "🏠 الرئيسية",
+        navGames: "🎮 الألعاب",
+        navTools: "🛠️ الأدوات",
+        navTuts: "📚 الشروحات",
+        game1Title: "🔥 لعبة ببجي مهكرة",
+        game1Desc: "نسخة معدلة من لعبة PUBG توفر مميزات إضافية مثل أزياء مجانية وسرعة محسنة.",
+        game1Btn: "تحميل اللعبة",
+        game2Title: "⚡ فورتنايت بخصائص خاصة",
+        game2Desc: "إصدار مخصص من Fortnite يوفر لك سكنات مجانية وإضافات قوية.",
+        game2Btn: "تحميل اللعبة",
+        game3Title: "🚗 سباق السيارات المعدلة",
+        game3Desc: "لعبة سباق سيارات مع تعديلات خاصة لزيادة المتعة والتشويق.",
+        game3Btn: "تحميل اللعبة",
+        footer: "Ⓒ 2025 XSPEEDO GAMING - جميع الحقوق محفوظة"
+      },
+      en: {
+        pageTitle: "XSPEEDO GAMING - Games",
+        pagTitle: "🎮 Games Section",
+        navHome: "🏠 Home",
+        navGames: "🎮 Games",
+        navTools: "🛠️ Tools",
+        navTuts: "📚 Tutorials",
+        game1Title: "🔥 PUBG Modded",
+        game1Desc: "A modified version of PUBG with extra features like free outfits and boosted speed.",
+        game1Btn: "Download Game",
+        game2Title: "⚡ Fortnite Special Edition",
+        game2Desc: "Custom Fortnite edition offering free skins and powerful perks.",
+        game2Btn: "Download Game",
+        game3Title: "🚗 Modified Car Racing",
+        game3Desc: "A racing game with special mods for more fun and excitement.",
+        game3Btn: "Download Game",
+        footer: "Ⓒ 2025 XSPEEDO GAMING - All Rights Reserved"
+      }
+    };
+
+    function switchLang() {
+      const t = translations[currentLang];
+      document.getElementById("page-title").textContent = t.pageTitle;
+      document.getElementById("pag-title").textContent = t.pagTitle;
+      document.getElementById("nav-home").textContent = t.navHome;
+      document.getElementById("nav-games-active").textContent = t.navGames;
+      document.getElementById("nav-tools").textContent = t.navTools;
+      document.getElementById("nav-tuts").textContent = t.navTuts;
+
+      document.getElementById("game1-title").textContent = t.game1Title;
+      document.getElementById("game1-desc").textContent = t.game1Desc;
+      document.getElementById("game1-btn").textContent = t.game1Btn;
+
+      document.getElementById("game2-title").textContent = t.game2Title;
+      document.getElementById("game2-desc").textContent = t.game2Desc;
+      document.getElementById("game2-btn").textContent = t.game2Btn;
+
+      document.getElementById("game3-title").textContent = t.game3Title;
+      document.getElementById("game3-desc").textContent = t.game3Desc;
+      document.getElementById("game3-btn").textContent = t.game3Btn;
+
+      document.getElementById("footer").textContent = t.footer;
+
+      langBtn.textContent = currentLang === "ar" ? "ENG" : "AR";
+      document.documentElement.lang = currentLang;
+    }
+
+    langBtn.addEventListener("click", () => {
+      currentLang = currentLang === "ar" ? "en" : "ar";
+      switchLang();
+    });
+  </script>
+</body>
+</html>
